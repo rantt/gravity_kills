@@ -38,7 +38,7 @@ Game.Load.prototype = {
   preload: function() {
 
     //Loading Screen Message/bar
-    var loadingText = this.game.add.text(Game.w, Game.h, 'Loading...', { font: '30px Helvetica', fill: '#000' });
+    var loadingText = this.game.add.text(Game.w/2, Game.h/2, 'Loading...', { font: '30px Helvetica', fill: '#000' });
   	loadingText.anchor.setTo(0.5, 0.5);
   	var preloading = this.game.add.sprite(Game.w/2-64, Game.h/2+50, 'loading');
   	this.game.load.setPreloadSprite(preloading);
