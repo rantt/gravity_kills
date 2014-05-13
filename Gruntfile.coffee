@@ -6,7 +6,7 @@ module.exports = (grunt) ->
     SRC_DIR: 'src'
     DST_DIR: 'dist'
     DST_FILE:  '<%= DST_DIR %>/main'
-    INDEX_FILE: 'index.html'
+    INDEX_FILE: 'index.html.db5'
 
     # For the moment grab latest phaser build
     # from GH, later on phaser might have Bower support
@@ -72,25 +72,25 @@ module.exports = (grunt) ->
         files:
           '<%= DST_FILE %>.min.css': ['<%= SRC_DIR %>/css/**/*.css']
 
-    htmlmin:
-      options:
-        removeComments: true
-        removeCommentsFromCDATA: true
-        removeCDATASectionsFromCDATA: true
-        collapseWhitespace: true
-        collapseBooleanAttributes: true
-        removeAttributeQuotes: true
-        removeRedundantAttributes: true
-        useShortDoctype: true
-
-      index:
-        files:
-          '<%= DST_DIR %>/<%= INDEX_FILE %>': '<%= DST_DIR %>/<%= INDEX_FILE %>'
+    # htmlmin:
+    #   options:
+    #     removeComments: true
+    #     removeCommentsFromCDATA: true
+    #     removeCDATASectionsFromCDATA: true
+    #     collapseWhitespace: true
+    #     collapseBooleanAttributes: true
+    #     removeAttributeQuotes: true
+    #     removeRedundantAttributes: true
+    #     useShortDoctype: true
+    #
+    #   index:
+    #     files:
+    #       '<%= DST_DIR %>/index.html': '<%= DST_DIR %>/<%= INDEX_FILE %>'
 
     processhtml:
       index:
         files:
-          '<%= DST_DIR %>/<%= INDEX_FILE %>': '<%= SRC_DIR %>/<%=INDEX_FILE %>'
+          '<%= DST_DIR %>/index.html': '<%= SRC_DIR %>/<%=INDEX_FILE %>'
 
     connect:
       dev:
@@ -130,7 +130,7 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-processhtml'
 
   @registerTask 'dist', ['clean', 'jshint', 'uglify',
-                         'cssmin', 'copy', 'processhtml', 'htmlmin']
+                         'cssmin', 'copy', 'processhtml']
   @registerTask 'server',  ['jshint', 'connect', 'watch']
   @registerTask 'update', ['curl-dir']
   @registerTask 'default', ['server']

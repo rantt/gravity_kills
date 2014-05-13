@@ -6,3 +6,17 @@ body {
 #game canvas {
     margin: 0 auto;
 }
+
+.navbar-custom {
+  background-color: #890000;
+  color:red;
+  border-radius:0;
+ }
+ .navbar-custom .navbar-brand {
+  color: #FFF;
+  padding: 5px;
+ }
+ .navbar-custom .navbar-nav > li > a {
+  color:#FFF;
+  font-weight:bold;
+ }
