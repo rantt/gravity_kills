@@ -406,6 +406,20 @@
                  "width":0,
                  "x":360,
                  "y":267
+                }, 
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "text":"Right on!  You made it.  This is the last level..."
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":300,
+                 "y":380
                 }],
          "opacity":1,
          "type":"objectgroup",

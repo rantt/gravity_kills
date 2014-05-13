@@ -196,6 +196,20 @@
                  "width":0,
                  "x":320,
                  "y":560
+                }, 
+                {
+                 "gid":1,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "text":"claustrophobic?"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":580,
+                 "y":60
                 }],
          "opacity":1,
          "type":"objectgroup",

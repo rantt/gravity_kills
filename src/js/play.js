@@ -109,6 +109,7 @@ Game.Play.prototype = {
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
 
+
     this.restartText = this.game.add.text(Game.w/2, Game.h/2, '', { font: '32px Helvetica', fill: '#ffffff', align: 'center'});
     this.restartText.font = 'Helvetica';
     this.restartText.anchor.set(0.5);
@@ -224,6 +225,9 @@ Game.Play.prototype = {
       p.x += p.width/2;
       p.y += p.width;
     }, this);
+
+
+
   },
   nextLevel: function(player,portal) {
     if (this.locked !== true) {
@@ -409,11 +413,12 @@ Game.Play.prototype = {
     this.game.add.tween(this.player.scale).to({x:1, y:1}, 200).start();
     if (this.player.body.gravity.y === -gravity) {
       this.game.add.tween(this.player).to({angle:0},1).start();
-      this.player.body.gravity.y = gravity;
+      // this.player.body.gravity.y = gravity;
     }
+    this.player.body.gravity.y = gravity;
     this.player.anchor.setTo(0.5,0.5);
 
-    this.player.reset(75, Game.h-40);
+    this.player.reset(75, Game.h-50);
   },
   twitter: function() {
     window.open('http://twitter.com/share?text=I+just+beat+Gravity+Kills!+and+only+died+'+deaths+'+times+See+if+you+can+beat+it+at&via=rantt_&url=http://www.divideby5.com/games/gravity_kills/', '_blank');
