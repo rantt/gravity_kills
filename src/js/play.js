@@ -427,11 +427,11 @@ Game.Play.prototype = {
       this.music.volume = 1;
     }
   },
-  render: function() {
-    this.game.debug.text('level: ' + this.level, 32, 32);
-    this.game.debug.text('deaths: ' + deaths, 32, 64);
-    this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
-    this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
-  }
+  // render: function() {
+  //   this.game.debug.text('level: ' + this.level, 32, 32);
+  //   this.game.debug.text('deaths: ' + deaths, 32, 64);
+  //   this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
+  //   this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
+  // }
 
 };
