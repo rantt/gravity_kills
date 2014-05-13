@@ -2,6 +2,8 @@
 
 Playing with Gravity and spikes.
 
+![screenshot](screenshot.png)
+
 You can play it [here](http://divideby5.com/games/gravity_kills/)
 
 Developed using [Phaser.js](http://phaser.io)
