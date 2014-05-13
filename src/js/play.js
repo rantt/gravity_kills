@@ -36,7 +36,7 @@ Game.Play.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.ARCADE);
 
-    this.level = 'the_end';
+    this.level = 'level1';
     this.cellCount = 0;
     this.cellTotal = 0;
 
