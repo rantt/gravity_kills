@@ -10,11 +10,12 @@
 //     return Math.floor(Math.random() * (max - min + 1)) + min;
 // }
 
-// var musicOn = true;
 var deaths = 0;
+var won = false;
 // var test;
 var muteKey;
 var musicOn = true;
+var rKey;
 var wKey;
 var aKey;
 var sKey;
@@ -35,7 +36,7 @@ Game.Play.prototype = {
   create: function() {
     this.game.physics.startSystem(Phaser.ARCADE);
 
-    this.level = 'level1';
+    this.level = 'the_end';
     this.cellCount = 0;
     this.cellTotal = 0;
 
@@ -104,6 +105,7 @@ Game.Play.prototype = {
     aKey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
     sKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
     dKey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+    rKey = this.game.input.keyboard.addKey(Phaser.Keyboard.R);
     spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
 
@@ -137,27 +139,32 @@ Game.Play.prototype = {
     var msg;
 
     if (this.level === 'the_end') {
+      won = true;
       msg =  'Your Died: ' + deaths + '\n';
+      msg +=  'Press R to restart.\n';
       msg += '~Share your score on twitter!~\n';
       this.restartText.setText(msg);
       this.restartText.visible = true;
       this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+110,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
-      this.twitterButton.fixedToCamera = true; 
+      this.twitterButton.fixedToCamera = true;
     }else if (this.level === 'the_impossible') {
+      won = false;
       this.restartText.visible = false;
       this.twitterButton.visible = false;
     }else if (this.level === undefined) {
+      won = true;
       msg = 'Congratulations! You Beat the Impossible Level.\n';
+      msg +=  'Press R to restart.\n';
       msg +=  'You Died: ' + deaths + '\n';
       this.restartText.setText(msg);
       this.restartText.visible = true;
       this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+110,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
-      this.twitterButton.fixedToCamera = true; 
+      this.twitterButton.fixedToCamera = true;
     }
-    
-    
+
+
     this.map = this.game.add.tilemap(this.level);
     this.map.addTilesetImage('tiles','tiles');
     this.map.addTilesetImage('mobs','mobs');
@@ -176,7 +183,7 @@ Game.Play.prototype = {
     this.locked = true;
 
     this.loadObjects();
-    
+
   },
   loadObjects: function() {
     this.cells.callAll('animations.add', 'animations', 'spin', [0,1,2,3], 5, true);
@@ -185,7 +192,7 @@ Game.Play.prototype = {
       this.cellTotal += 1;
       c.alive = true;
     },this);
-    
+
     this.portals.forEach(function(p){
       p.anchor.setTo(0.5,0.5);
       p.y += p.height/2;
@@ -228,12 +235,12 @@ Game.Play.prototype = {
 
       this.cellCount = 0;
       this.cellTotal = 0;
-      
+
       this.level = portal.destination;
 
       var t = this.game.add.tween(this.player.scale).to({x:0, y:0}, 200).start();
       t.onComplete.add(this.loadLevel, this);
-    }      
+    }
 
   },
   pickUpCell: function(player, cell) {
@@ -251,10 +258,10 @@ Game.Play.prototype = {
     this.game.physics.arcade.overlap(this.mobs, this.player, this.playerDead, null, this);
 
     this.player.body.velocity.x = 0;
-    
+
     if (this.cellCount === this.cellTotal) {
       this.portals.forEach(function(p){
-        if (p.frame === 0){ 
+        if (p.frame === 0){
           this.portalUpSnd.play();
         }
         p.frame = 1;
@@ -310,9 +317,36 @@ Game.Play.prototype = {
 
     spaceKey.onDown.add(this.toggleGravity, this);
 
+    rKey.onDown.add(this.restartGame, this);
+    // if (rKey.isDown) {
+    //   this.restartGame();
+    // }
+
     // // Toggle Music
     muteKey.onDown.add(this.toggleMute, this);
 
+  },
+  restartGame: function() {
+    if (won === true) {
+      won = false;
+      deaths = 0;
+      this.locked = false;
+      this.cells.callAll('kill');
+
+      //Reinitialize cell group
+      this.cells = this.game.add.group();
+      this.cells.enableBody = true;
+
+      this.restartText.visible = false;
+      this.twitterButton.visible = false;
+
+      this.cellCount = 0;
+      this.cellTotal = 0;
+
+      this.level = 'level1';
+
+      this.loadLevel();
+    }
   },
   mobBounce: function(mob, layer){
 		if (mob.move === 'h') {
@@ -393,11 +427,11 @@ Game.Play.prototype = {
       this.music.volume = 1;
     }
   },
-  // render: function() {
-  //   this.game.debug.text('level: ' + this.level, 32, 32);
-  //   this.game.debug.text('deaths: ' + deaths, 32, 64);
-  //   this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
-  //   this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
-  // }
+  render: function() {
+    this.game.debug.text('level: ' + this.level, 32, 32);
+    this.game.debug.text('deaths: ' + deaths, 32, 64);
+    this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
+    this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
+  }
 
 };
