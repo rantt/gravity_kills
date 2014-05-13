@@ -65,10 +65,10 @@ Game.Load.prototype = {
 
 
     // Music Track
-    this.game.load.audio('music','assets/audio/CausticChip16_0.ogg');
-    this.game.load.audio('jump_up', 'assets/audio/jump_up.ogg');
-    this.game.load.audio('jump_down', 'assets/audio/jump_down.ogg');
-    this.game.load.audio('player_dead', 'assets/audio/player_dead.ogg');
+    this.game.load.audio('music','assets/audio/CausticChip16_0.mp3');
+    this.game.load.audio('jump_up', 'assets/audio/jump_up.wav');
+    this.game.load.audio('jump_down', 'assets/audio/jump_down.wav');
+    this.game.load.audio('player_dead', 'assets/audio/player_dead.wav');
     this.game.load.audio('portal_up', 'assets/audio/portal_up.wav');
     this.game.load.audio('power_up', 'assets/audio/powerup.wav');
 
