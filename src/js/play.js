@@ -252,6 +252,13 @@ Game.Play.prototype = {
     cell.destroy();
     this.cellCount += 1;
   },
+  onGround: function() {
+    if (this.player.body.blocked.up || this.player.body.blocked.down) {
+      return true;
+    } else {
+      return false;
+    }
+  },
   update: function() {
     this.game.physics.arcade.collide(this.layer, this.player);
     // this.game.physics.arcade.overlap(this.player, this.portals, this.nextLevel, null, this);
@@ -271,6 +278,7 @@ Game.Play.prototype = {
         p.frame = 1;
       }, this);
     }
+
 
         // Check if the left arrow key is being pressed
     if (cursors.left.isDown || aKey.isDown)
@@ -296,7 +304,7 @@ Game.Play.prototype = {
       // Check if 'facing' is not 'right'
       if (facing !== 'right')
       {
-        this.player.animations.play('right');
+          this.player.animations.play('right');
         facing = 'right';
       }
     }
@@ -322,12 +330,18 @@ Game.Play.prototype = {
     spaceKey.onDown.add(this.toggleGravity, this);
 
     rKey.onDown.add(this.restartGame, this);
-    // if (rKey.isDown) {
-    //   this.restartGame();
-    // }
 
     // // Toggle Music
     muteKey.onDown.add(this.toggleMute, this);
+
+    //Stop Walking animation when in the air
+    if ((this.onGround() === false) && (facing !== 'idle')){
+        if (facing === 'left') {
+          this.player.frame = 0;
+        }else{
+          this.player.frame = 4;
+        }
+    }
 
   },
   restartGame: function() {
@@ -375,18 +389,22 @@ Game.Play.prototype = {
   },
   setGravityNormal: function() {
     //reverse Gravity and flip player upside down
-    this.jumpUpSnd.play();
-    this.player.body.gravity.y = -gravity;
-    this.game.add.tween(this.player).to({angle:180},100).start();
-    this.player.scale.x = -1;
-    orientation = 'up';
+    if (orientation === 'down'){
+      this.jumpUpSnd.play();
+      this.player.body.gravity.y = -gravity;
+      this.game.add.tween(this.player).to({angle:180},100).start();
+      this.player.scale.x = -1;
+      orientation = 'up';
+    }
   },
   setGravityReverse: function() {
-    this.jumpDownSnd.play();
-    this.player.body.gravity.y = gravity;
-    this.game.add.tween(this.player).to({angle:0},100).start();
-    orientation = 'down';
-    this.player.scale.x = 1;
+    if (orientation === 'up') {
+      this.jumpDownSnd.play();
+      this.player.body.gravity.y = gravity;
+      this.game.add.tween(this.player).to({angle:0},100).start();
+      orientation = 'down';
+      this.player.scale.x = 1;
+    }
   },
   toggleGravity: function() {
     if (orientation === 'down'){
@@ -433,7 +451,8 @@ Game.Play.prototype = {
     }
   },
   // render: function() {
-  //   this.game.debug.text('level: ' + this.level, 32, 32);
+  //   // this.game.debug.text('level: ' + this.level, 32, 32);
+  //   this.game.debug.text('touching: ' + this.onGround(), 32, 32);
   //   this.game.debug.text('deaths: ' + deaths, 32, 64);
   //   this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
   //   this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
