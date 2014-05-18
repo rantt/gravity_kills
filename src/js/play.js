@@ -36,14 +36,14 @@ Game.Play = function(game) {
 
 Game.Play.prototype = {
   create: function() {
-    this.game.input.addPointer();
-    this.game.input.addPointer();
-    this.game.input.addPointer();
-    this.game.input.addPointer();
+    // this.game.input.addPointer();
+    // this.game.input.addPointer();
+    // this.game.input.addPointer();
+    // this.game.input.addPointer();
 
-    // this.game.physics.startSystem(Phaser.ARCADE);
+    this.game.physics.startSystem(Phaser.ARCADE);
     // this.game.physics.startSystem(Phaser.Physics.P2JS);
-    this.game.physics.startSystem(Phaser.Physics.NINJA);
+    // this.game.physics.startSystem(Phaser.Physics.NINJA);
 
     this.level = 'level1';
     // this.level = 'level8';
@@ -292,6 +292,14 @@ Game.Play.prototype = {
     this.powerUpSnd.play();
     cell.destroy();
     this.cellCount += 1;
+    if (this.cellCount === this.cellTotal) {
+      this.portals.forEach(function(p){
+        if (p.frame === 0){
+          this.portalUpSnd.play();
+        }
+        p.frame = 1;
+      }, this);
+    }
   },
   onGround: function() {
     if (this.player.body.blocked.up || this.player.body.blocked.down) {
@@ -303,38 +311,29 @@ Game.Play.prototype = {
   update: function() {
     // this.game.physics.arcade.collide(this.layer, this.player);
     this.game.physics.arcade.collide(this.player, this.layer);
+    // this.game.physics.arcade.overlap(this.player, this.layer);
     this.game.physics.arcade.overlap(this.player, this.cells, this.pickUpCell, null, this);
     this.game.physics.arcade.overlap(this.player, this.portals, this.nextLevel, null, this);
-
     this.game.physics.arcade.overlap(this.mobs, this.layer, this.mobBounce, null, this);
     this.game.physics.arcade.overlap(this.mobs, this.player, this.playerDead, null, this);
-
     this.player.body.velocity.x = 0;
 
-
-    if (this.cellCount === this.cellTotal) {
-      this.portals.forEach(function(p){
-        if (p.frame === 0){
-          this.portalUpSnd.play();
-        }
-        p.frame = 1;
-      }, this);
-    }
 
     if (mobile) {
       this.mobileMove();
     }else {
       this.browserMove();
+
+      //Stop Walking animation when in the air
+      if ((this.onGround() === false) && (facing !== 'idle')){
+          if (facing === 'left') {
+            this.player.frame = 0;
+          }else{
+            this.player.frame = 4;
+          }
+      }
     } 
 
-    //Stop Walking animation when in the air
-    if ((this.onGround() === false) && (facing !== 'idle')){
-        if (facing === 'left') {
-          this.player.frame = 0;
-        }else{
-          this.player.frame = 4;
-        }
-    }
 
   },
   browserMove: function() {
@@ -546,26 +545,26 @@ Game.Play.prototype = {
       this.music.volume = 1;
     }
   },
-  render: function() {
-    // this.game.debug.text('level: ' + this.level, 32, 32);
-    
-    // this.game.debug.text('touching: ' + this.toggleButton.input.pointerDown(this.game.input.activePointer.id), 32, 32);
-    // this.game.debug.text('touching: ' + this.toggleButton.input.justPressed(this.game.input.activePointer.id,1), 32, 32);
-    // this.game.debug.text('touching: ' + this.toggleButton.events.onInputDown(this.game.input.activePointer.id,1), 32, 32);
-    // this.game.debug.text('touching: ' + this.toggleButton.events.onInputDown, 32, 32);
-    // this.game.debug.text('deaths: ' + deaths, 32, 64);
-    this.game.debug.text('toggleReset' + toggleReset, 32, 64);
-    this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
-    this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
-    //  Just renders out the pointer data when you touch the canvas
-    this.game.debug.pointer(this.game.input.mousePointer);
-    this.game.debug.pointer(this.game.input.pointer1);
-    this.game.debug.pointer(this.game.input.pointer2);
-    this.game.debug.pointer(this.game.input.pointer3);
-    this.game.debug.pointer(this.game.input.pointer4);
-    this.game.debug.pointer(this.game.input.pointer5);
-    this.game.debug.pointer(this.game.input.pointer6);
-
-  }
-
+  // render: function() {
+  //   // this.game.debug.text('level: ' + this.level, 32, 32);
+  //   
+  //   // this.game.debug.text('touching: ' + this.toggleButton.input.pointerDown(this.game.input.activePointer.id), 32, 32);
+  //   // this.game.debug.text('touching: ' + this.toggleButton.input.justPressed(this.game.input.activePointer.id,1), 32, 32);
+  //   // this.game.debug.text('touching: ' + this.toggleButton.events.onInputDown(this.game.input.activePointer.id,1), 32, 32);
+  //   // this.game.debug.text('touching: ' + this.toggleButton.events.onInputDown, 32, 32);
+  //   // this.game.debug.text('deaths: ' + deaths, 32, 64);
+  //   this.game.debug.text('toggleReset' + toggleReset, 32, 64);
+  //   this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
+  //   this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
+  //   //  Just renders out the pointer data when you touch the canvas
+  //   this.game.debug.pointer(this.game.input.mousePointer);
+  //   this.game.debug.pointer(this.game.input.pointer1);
+  //   this.game.debug.pointer(this.game.input.pointer2);
+  //   // this.game.debug.pointer(this.game.input.pointer3);
+  //   // this.game.debug.pointer(this.game.input.pointer4);
+  //   // this.game.debug.pointer(this.game.input.pointer5);
+  //   // this.game.debug.pointer(this.game.input.pointer6);
+  //
+  // }
+  //
 };
