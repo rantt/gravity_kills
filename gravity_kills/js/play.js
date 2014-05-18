@@ -36,17 +36,9 @@ Game.Play = function(game) {
 
 Game.Play.prototype = {
   create: function() {
-    this.game.input.addPointer();
-    this.game.input.addPointer();
-    this.game.input.addPointer();
-    this.game.input.addPointer();
-
-    // this.game.physics.startSystem(Phaser.ARCADE);
-    // this.game.physics.startSystem(Phaser.Physics.P2JS);
-    this.game.physics.startSystem(Phaser.Physics.NINJA);
+    this.game.physics.startSystem(Phaser.ARCADE);
 
     this.level = 'level1';
-    // this.level = 'level8';
     this.cellCount = 0;
     this.cellTotal = 0;
 
@@ -66,10 +58,10 @@ Game.Play.prototype = {
     this.player.animations.add('left',[1,2,1,3],10,true);
     this.player.animations.add('right',[5,6,5,7],10,true);
 
+
     this.game.physics.enable(this.player);
 
     this.player.body.collideWorldBounds = true;
-    this.player.body.maxVelocity.setTo(700, 700);
 
 
 
@@ -128,10 +120,10 @@ Game.Play.prototype = {
     this.restartText.visible = false;
 
     
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    // if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
        mobile = true;
        this.dpad = this.game.add.group();
-    }
+    // }
 
     this.loadLevel();
 
@@ -203,7 +195,6 @@ Game.Play.prototype = {
     this.map.createFromObjects('objects', 5, 'spike', 0, true, false, this.mobs);
     this.map.createFromObjects('objects', 6, 'spike', 0, true, false, this.mobs);
     this.layer.resizeWorld();
-    // this.game.physics.p2.convertTilemap(this.map, this.layer);
 
     this.locked = true;
 
@@ -292,6 +283,14 @@ Game.Play.prototype = {
     this.powerUpSnd.play();
     cell.destroy();
     this.cellCount += 1;
+    if (this.cellCount === this.cellTotal) {
+      this.portals.forEach(function(p){
+        if (p.frame === 0){
+          this.portalUpSnd.play();
+        }
+        p.frame = 1;
+      }, this);
+    }
   },
   onGround: function() {
     if (this.player.body.blocked.up || this.player.body.blocked.down) {
@@ -301,8 +300,7 @@ Game.Play.prototype = {
     }
   },
   update: function() {
-    // this.game.physics.arcade.collide(this.layer, this.player);
-    this.game.physics.arcade.collide(this.player, this.layer);
+    this.game.physics.arcade.collide(this.layer, this.player);
     this.game.physics.arcade.overlap(this.player, this.cells, this.pickUpCell, null, this);
     this.game.physics.arcade.overlap(this.player, this.portals, this.nextLevel, null, this);
 
@@ -312,83 +310,8 @@ Game.Play.prototype = {
     this.player.body.velocity.x = 0;
 
 
-    if (this.cellCount === this.cellTotal) {
-      this.portals.forEach(function(p){
-        if (p.frame === 0){
-          this.portalUpSnd.play();
-        }
-        p.frame = 1;
-      }, this);
-    }
 
-    if (mobile) {
-      this.mobileMove();
-    }else {
-      this.browserMove();
-    } 
-
-    //Stop Walking animation when in the air
-    if ((this.onGround() === false) && (facing !== 'idle')){
-        if (facing === 'left') {
-          this.player.frame = 0;
-        }else{
-          this.player.frame = 4;
-        }
-    }
-
-  },
-  browserMove: function() {
-    if (cursors.left.isDown || aKey.isDown )
-    {
-      this.player.body.velocity.x = -hozMove;
-
-      // Check if 'facing' is not 'left'
-      if (facing !== 'left')
-      {
-        // Set 'facing' to 'left'
-          this.player.animations.play('left');
-        facing = 'left';
-      }
-
-    }
-    // Check if the right arrow key is being pressed
-    else if (cursors.right.isDown || dKey.isDown)
-    {
-      // Set the 'player' sprite's x velocity to a positive number:
-      //  have it move right on the screen.
-      this.player.body.velocity.x = hozMove;
-
-      // Check if 'facing' is not 'right'
-      if (facing !== 'right')
-      {
-          this.player.animations.play('right');
-        facing = 'right';
-      }
-    }
-    else {
-      if (facing !== 'idle')
-      {
-        this.player.animations.stop();
-        if (facing === 'left') {
-          this.player.frame = 0;
-        }else{
-          this.player.frame = 4;
-        }
-        facing = 'idle';
-      }
-    }
-
-    cursors.up.onDown.add(this.setGravityNormal, this);
-    wKey.onDown.add(this.setGravityNormal, this);
-    cursors.down.onDown.add(this.setGravityReverse, this);
-    sKey.onDown.add(this.setGravityReverse, this);
-    spaceKey.onDown.add(this.toggleGravity, this);
-
-    // Toggle Music
-    muteKey.onDown.add(this.toggleMute, this);
-    rKey.onDown.add(this.restartGame, this);
-  },
-  mobileMove: function() {
+        // Check if the left arrow key is being pressed
     if (cursors.left.isDown || aKey.isDown || this.left.input.pointerDown(this.game.input.activePointer.id) )
     // if (cursors.left.isDown || aKey.isDown )
     {
@@ -430,7 +353,31 @@ Game.Play.prototype = {
         facing = 'idle';
       }
     }
+
+    cursors.up.onDown.add(this.setGravityNormal, this);
+    wKey.onDown.add(this.setGravityNormal, this);
+
+    cursors.down.onDown.add(this.setGravityReverse, this);
+      
+    sKey.onDown.add(this.setGravityReverse, this);
+
+    spaceKey.onDown.add(this.toggleGravity, this);
     this.toggleButton.events.onInputDown.add(this.toggleGravity, this);
+
+    rKey.onDown.add(this.restartGame, this);
+
+    // // Toggle Music
+    muteKey.onDown.add(this.toggleMute, this);
+
+    //Stop Walking animation when in the air
+    if ((this.onGround() === false) && (facing !== 'idle')){
+        if (facing === 'left') {
+          this.player.frame = 0;
+        }else{
+          this.player.frame = 4;
+        }
+    }
+
   },
   restartGame: function() {
     if (won === true) {
@@ -514,25 +461,24 @@ Game.Play.prototype = {
     this.emitter.x = this.player.x;
     this.emitter.y = this.player.y;
     this.emitter.start(true, 1000, null, 64);
-    // this.player.kill();
 
     deaths += 1;
 
     this.respawnPlayer();
   },
   respawnPlayer: function() {
-    this.player.reset(75, Game.h - 50);
-
     this.player.frame = 0;
-    facing = 'right';
+    facing = '';
     this.orientation = 'down';
     this.game.add.tween(this.player.scale).to({x:1, y:1}, 200).start();
     if (this.player.body.gravity.y === -gravity) {
       this.game.add.tween(this.player).to({angle:0},1).start();
+      // this.player.body.gravity.y = gravity;
     }
     this.player.body.gravity.y = gravity;
     this.player.anchor.setTo(0.5,0.5);
 
+    this.player.reset(75, Game.h-50);
   },
   twitter: function() {
     window.open('http://twitter.com/share?text=I+just+beat+Gravity+Kills!+and+only+died+'+deaths+'+times+See+if+you+can+beat+it+at&via=rantt_&url=http://www.divideby5.com/games/gravity_kills/', '_blank');
@@ -557,15 +503,6 @@ Game.Play.prototype = {
     this.game.debug.text('toggleReset' + toggleReset, 32, 64);
     this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
     this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
-    //  Just renders out the pointer data when you touch the canvas
-    this.game.debug.pointer(this.game.input.mousePointer);
-    this.game.debug.pointer(this.game.input.pointer1);
-    this.game.debug.pointer(this.game.input.pointer2);
-    this.game.debug.pointer(this.game.input.pointer3);
-    this.game.debug.pointer(this.game.input.pointer4);
-    this.game.debug.pointer(this.game.input.pointer5);
-    this.game.debug.pointer(this.game.input.pointer6);
-
   }
 
 };

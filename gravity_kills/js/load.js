@@ -2,6 +2,10 @@ var Game = {
   w: 800,
   h: 600
 };
+// var Game = {
+//   w: 1000,
+//   h: 1000
+// };
 
 Game.Boot = function(game) {
   this.game = game;
@@ -58,6 +62,10 @@ Game.Load.prototype = {
     this.game.load.image('mobs', 'assets/mobs.png');
     this.game.load.image('spike','assets/spike.png');
     this.game.load.image('twitter','assets/twitter.png');
+    // this.game.load.image('left','assets/left.png');
+    // this.game.load.image('right','assets/right.png');
+    // this.game.load.image('up','assets/up.png');
+    // this.game.load.image('down','assets/down.png');
 
     this.game.load.atlasXML('dpad','assets/dpad_sheet.png','assets/dpad_sheet.xml');
 
