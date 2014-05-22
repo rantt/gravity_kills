@@ -13,7 +13,6 @@ module.exports = (grunt) ->
     'curl-dir':
       '<%= SRC_DIR %>/js/lib/': [
         'https://raw.github.com/photonstorm/phaser/master/build/phaser.min.js',
-        'https://raw.githubusercontent.com/austinhallock/html5-virtual-game-controller/master/gamecontroller.js'
       ]
 
 
