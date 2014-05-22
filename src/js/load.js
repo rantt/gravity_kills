@@ -62,7 +62,9 @@ Game.Load.prototype = {
     this.game.load.atlasXML('dpad','assets/dpad_sheet.png','assets/dpad_sheet.xml');
 
     // Music Track
-    this.game.load.audio('music','assets/audio/CausticChip16_0.mp3');
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false ) {
+      this.game.load.audio('music','assets/audio/CausticChip16_0.mp3');
+    }
     this.game.load.audio('jump_up', 'assets/audio/jump_up.wav');
     this.game.load.audio('jump_down', 'assets/audio/jump_down.wav');
     this.game.load.audio('player_dead', 'assets/audio/player_dead.wav');

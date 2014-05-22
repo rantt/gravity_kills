@@ -13,7 +13,6 @@
 var mobile = false;
 var deaths = 0;
 var won = false;
-var toggleReset = false;
 // var test;
 var muteKey;
 var musicOn = true;
@@ -36,10 +35,6 @@ Game.Play = function(game) {
 
 Game.Play.prototype = {
   create: function() {
-    // this.game.input.addPointer();
-    // this.game.input.addPointer();
-    // this.game.input.addPointer();
-    // this.game.input.addPointer();
 
     this.game.physics.startSystem(Phaser.ARCADE);
     // this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -66,8 +61,11 @@ Game.Play.prototype = {
     this.player.animations.add('left',[1,2,1,3],10,true);
     this.player.animations.add('right',[5,6,5,7],10,true);
 
-    this.game.physics.enable(this.player);
+    this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
+    // this.game.physics.arcade.enable(this.player);
+    // player.body.setSize(20, 32, 5, 16);
 
+    // this.player.body.setSize(28,45,7,16);
     this.player.body.collideWorldBounds = true;
     this.player.body.maxVelocity.setTo(700, 700);
 
@@ -86,14 +84,6 @@ Game.Play.prototype = {
     this.emitter.minParticleSpeed.setTo(-200, -200);
     this.emitter.maxParticleSpeed.setTo(200, 200);
 
-    // Music
-    this.music = this.game.add.audio('music');
-    this.music.override = true;
-    this.music.addMarker('intro',1,7,1,false);
-    this.music.addMarker('main',8,80,1,true);
-    // this.music.play('intro');
-    this.music.play('main',0,1,true);
-    // this.music.play('',0,1,true);
 
 
     this.playerDeadSnd = this.game.add.sound('player_dead');
@@ -131,7 +121,17 @@ Game.Play.prototype = {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
        mobile = true;
        this.dpad = this.game.add.group();
+    }else {
+      // Music
+      this.music = this.game.add.audio('music');
+      this.music.override = true;
+      this.music.addMarker('intro',1,7,1,false);
+      this.music.addMarker('main',8,80,1,true);
+      this.music.play('main',0,1,true);
+      // this.music.play('intro');
+      // this.music.play('',0,1,true);
     }
+
 
     this.loadLevel();
 
@@ -197,6 +197,7 @@ Game.Play.prototype = {
     this.map.setCollision(3);
     this.map.setTileIndexCallback(2, this.playerDead, this);
     this.layer = this.map.createLayer('layer');
+    // this.layer.debug;
     this.map.createFromObjects('objects', 4, 'portal', 0, true, false, this.portals);
     this.map.createFromObjects('objects', 7, 'cells', 0, true, false, this.cells);
     this.map.createFromObjects('objects', 1, '', 0, true, false, this.labels);
@@ -547,24 +548,23 @@ Game.Play.prototype = {
   },
   // render: function() {
   //   // this.game.debug.text('level: ' + this.level, 32, 32);
-  //   
+  //
   //   // this.game.debug.text('touching: ' + this.toggleButton.input.pointerDown(this.game.input.activePointer.id), 32, 32);
   //   // this.game.debug.text('touching: ' + this.toggleButton.input.justPressed(this.game.input.activePointer.id,1), 32, 32);
   //   // this.game.debug.text('touching: ' + this.toggleButton.events.onInputDown(this.game.input.activePointer.id,1), 32, 32);
   //   // this.game.debug.text('touching: ' + this.toggleButton.events.onInputDown, 32, 32);
   //   // this.game.debug.text('deaths: ' + deaths, 32, 64);
-  //   this.game.debug.text('toggleReset' + toggleReset, 32, 64);
-  //   this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
-  //   this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
+  //   // this.game.debug.text('toggleReset' + toggleReset, 32, 64);
+  //   // this.game.debug.text('cells picked up: ' + this.cells.countDead, 32, 96);
+  //   // this.game.debug.text('cells total: ' + this.cellTotal, 32, 114);
   //   //  Just renders out the pointer data when you touch the canvas
-  //   this.game.debug.pointer(this.game.input.mousePointer);
-  //   this.game.debug.pointer(this.game.input.pointer1);
-  //   this.game.debug.pointer(this.game.input.pointer2);
-  //   // this.game.debug.pointer(this.game.input.pointer3);
-  //   // this.game.debug.pointer(this.game.input.pointer4);
-  //   // this.game.debug.pointer(this.game.input.pointer5);
-  //   // this.game.debug.pointer(this.game.input.pointer6);
-  //
+  //   // this.game.debug.pointer(this.game.input.mousePointer);
+  //   // this.game.debug.pointer(this.game.input.pointer1);
+  //   // this.game.debug.pointer(this.game.input.pointer2);
+  //   this.game.debug.text(this.game.time.physicsElapsed, 32, 32);
+  //   this.game.debug.body(this.player);
+  //   this.game.debug.bodyInfo(this.player, 16, 24);
+  //            
   // }
-  //
+  
 };
