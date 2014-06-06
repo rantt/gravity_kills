@@ -1,5 +1,5 @@
 {
-  "name": "Gravity Kills",
+  "name": "Gravity_Kills",
   "description": "",
   "readme": "",
   "repository": "",
@@ -14,6 +14,7 @@
     "grunt-contrib-clean": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
+    "grunt-jsonmin": "*",
     "grunt-contrib-cssmin": "*",
     "grunt-contrib-htmlmin": "*",
     "grunt-contrib-watch": "*",

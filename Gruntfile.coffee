@@ -30,14 +30,6 @@ module.exports = (grunt) ->
           src: ['**']
           dest: '<%= DST_DIR %>/assets/'
         ]
-      levels:
-        files: [
-          expand: true
-          flatten: false
-          cwd: '<%= SRC_DIR %>/levels/'
-          src: ['**']
-          dest: '<%= DST_DIR %>/levels/'
-        ]
       index:
         files: [
           src: ['<%= SRC_DIR %>/<%= INDEX_FILE %>]']
@@ -61,10 +53,26 @@ module.exports = (grunt) ->
         files:
           '<%= DST_FILE %>.min.js': ['<%= SRC_DIR %>/js/lib/phaser.min.js','<%= SRC_DIR %>/js/load.js','<%= SRC_DIR %>/js/menu.js','<%= SRC_DIR %>/js/play.js','<%= SRC_DIR %>/js/game.js']
 
-
-
       options:
         banner: '/*! <%= PKG.name %> v<%= PKG.version %> */\n'
+
+    jsonmin:
+      stripAll:
+        options:
+          stripWhitespace: true
+          stripComments: true
+
+        files:
+          '<%= DST_DIR %>/levels/level1.json':  '<%= SRC_DIR %>/levels/level1.json'
+          '<%= DST_DIR %>/levels/level2.json':  '<%= SRC_DIR %>/levels/level2.json'
+          '<%= DST_DIR %>/levels/level3.json':  '<%= SRC_DIR %>/levels/level3.json'
+          '<%= DST_DIR %>/levels/level4.json':  '<%= SRC_DIR %>/levels/level4.json'
+          '<%= DST_DIR %>/levels/level5.json':  '<%= SRC_DIR %>/levels/level5.json'
+          '<%= DST_DIR %>/levels/level7.json':  '<%= SRC_DIR %>/levels/level7.json'
+          '<%= DST_DIR %>/levels/the_end.json': '<%= SRC_DIR %>/levels/the_end.json'
+          '<%= DST_DIR %>/levels/the_impossible.json': '<%= SRC_DIR %>/levels/the_impossible.json'
+
+
 
     cssmin:
       dist:
@@ -122,13 +130,14 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-connect'
   @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-contrib-uglify'
+  @loadNpmTasks 'grunt-jsonmin'
   @loadNpmTasks 'grunt-contrib-cssmin'
   @loadNpmTasks 'grunt-contrib-htmlmin'
   @loadNpmTasks 'grunt-contrib-watch'
   @loadNpmTasks 'grunt-curl'
   @loadNpmTasks 'grunt-processhtml'
 
-  @registerTask 'dist', ['clean', 'jshint', 'uglify',
+  @registerTask 'dist', ['clean', 'jshint', 'uglify','jsonmin',
                          'cssmin', 'copy', 'processhtml']
   @registerTask 'server',  ['jshint', 'connect', 'watch']
   @registerTask 'update', ['curl-dir']

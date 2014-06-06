@@ -49,9 +49,9 @@ Game.Load.prototype = {
     this.game.load.tilemap('level3','levels/level3.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('level4','levels/level4.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('level5','levels/level5.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.tilemap('level6','levels/level6.json', null, Phaser.Tilemap.TILED_JSON);
+    // this.game.load.tilemap('level6','levels/level6.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('level7','levels/level7.json', null, Phaser.Tilemap.TILED_JSON);
-    this.game.load.tilemap('level8','levels/level8.json', null, Phaser.Tilemap.TILED_JSON);
+    // this.game.load.tilemap('level8','levels/level8.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('the_end','levels/the_end.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('the_impossible','levels/the_impossible.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles', 'assets/sprites.png');
