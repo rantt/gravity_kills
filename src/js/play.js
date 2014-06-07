@@ -111,9 +111,13 @@ Game.Play.prototype = {
     muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
 
 
-    this.restartText = this.game.add.text(Game.w/2, Game.h/2, '', { font: '32px Helvetica', fill: '#ffffff', align: 'center'});
-    this.restartText.font = 'Helvetica';
-    this.restartText.anchor.set(0.5);
+    // var loadingText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia', 'Loading...', 32);
+    // this.restartText = this.game.add.text(Game.w/2, Game.h/2, '', { font: '32px Helvetica', fill: '#ffffff', align: 'center'});
+    // this.restartText.font = 'Helvetica';
+    // this.restartText.anchor.set(0.5);
+    this.restartText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia','',21);
+    this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2;
+
     this.restartText.fixedToCamera = true;
     this.restartText.visible = false;
 
@@ -128,6 +132,7 @@ Game.Play.prototype = {
       this.music.addMarker('intro',1,7,1,false);
       this.music.addMarker('main',8,80,1,true);
       this.music.play('main',0,1,true);
+      // this.music.stop();
       // this.music.play('intro');
       // this.music.play('',0,1,true);
     }
@@ -168,6 +173,7 @@ Game.Play.prototype = {
       msg +=  'Press R to restart.\n';
       msg += '~Share your score on twitter!~\n';
       this.restartText.setText(msg);
+      this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2;
       this.restartText.visible = true;
       this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+110,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
@@ -182,6 +188,7 @@ Game.Play.prototype = {
       msg +=  'Press R to restart.\n';
       msg +=  'You Died: ' + deaths + '\n';
       this.restartText.setText(msg);
+      this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2;
       this.restartText.visible = true;
       this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+110,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
@@ -226,10 +233,15 @@ Game.Play.prototype = {
       t.loop(true).start();
     }, this);
 
+
+
+    // var loadingText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia', 'Loading...', 32);
     this.labels.forEach(function(l){
-      l.message = this.game.add.text(l.x, l.y, l.text, { font: '21px Helvetica', fill: '#FFFFFF' });
-      l.message.anchor.setTo(0.5, 1);
+      // l.message = this.game.add.text(l.x, l.y, l.text, { font: '21px Helvetica', fill: '#FFFFFF' });
+      l.message = this.game.add.bitmapText(l.x, l.y, 'minecraftia', l.text, 21);
+      // l.message.anchor.setTo(0.5, 1);
       l.message.x += l.width/2;
+      l.message.x = this.game.width / 2 - l.message.textWidth / 2;
       l.message.y += l.height/2;
       l.message.alive = true;
     }, this);
@@ -514,7 +526,7 @@ Game.Play.prototype = {
     this.emitter.x = this.player.x;
     this.emitter.y = this.player.y;
     this.emitter.start(true, 1000, null, 64);
-    // this.player.kill();
+    this.player.kill();
 
     deaths += 1;
 

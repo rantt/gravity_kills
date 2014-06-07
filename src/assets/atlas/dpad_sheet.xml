@@ -1,0 +1,6 @@
+<TextureAtlas imagePath="dpad_sheet.png">
+	<SubTexture name="down.png" x="0" y="66" width="64" height="63"/>
+	<SubTexture name="left.png" x="0" y="131" width="64" height="64"/>
+	<SubTexture name="right.png" x="66" y="0" width="64" height="64"/>
+	<SubTexture name="up.png" x="0" y="0" width="64" height="64"/>
+</TextureAtlas>
