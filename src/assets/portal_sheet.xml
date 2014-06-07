@@ -1,4 +1,0 @@
-<TextureAtlas imagePath="portal_sheet.png">
-	<SubTexture name="portal1.png" x="66" y="0" width="64" height="128"/>
-	<SubTexture name="portal2.png" x="0" y="0" width="64" height="128"/>
-</TextureAtlas>
