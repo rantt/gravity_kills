@@ -22,13 +22,29 @@ module.exports = (grunt) ->
       dist: ['<%= DST_DIR %>']
 
     copy:
-      assets:
+      atlas:
         files: [
           expand: true
           flatten: false
-          cwd: '<%= SRC_DIR %>/assets/'
+          cwd: '<%= SRC_DIR %>/assets/atlas/'
           src: ['**']
-          dest: '<%= DST_DIR %>/assets/'
+          dest: '<%= DST_DIR %>/assets/atlas/'
+        ]
+      font:
+        files: [
+          expand: true
+          flatten: false
+          cwd: '<%= SRC_DIR %>/assets/font/'
+          src: ['**']
+          dest: '<%= DST_DIR %>/assets/font/'
+        ]
+      audio:
+        files: [
+          expand: true
+          flatten: false
+          cwd: '<%= SRC_DIR %>/assets/audio/'
+          src: ['**']
+          dest: '<%= DST_DIR %>/assets/audio/'
         ]
       index:
         files: [
@@ -72,6 +88,25 @@ module.exports = (grunt) ->
           '<%= DST_DIR %>/levels/the_end.json': '<%= SRC_DIR %>/levels/the_end.json'
           '<%= DST_DIR %>/levels/the_impossible.json': '<%= SRC_DIR %>/levels/the_impossible.json'
 
+
+    imagemin:
+      png:
+        options:
+          optimizationLevel: 7
+    
+        files: [
+          
+          # Set to true to enable the following options…
+          expand: true
+          
+          # cwd is 'current working directory'
+          cwd: "<%= SRC_DIR %>/assets/image/"
+          src: ["**/*.png"]
+          
+          # Could also match cwd line above. i.e. project-directory/img/
+          dest: "<%= DST_DIR %>/assets/image/"
+          ext: ".png"
+        ]
 
 
     cssmin:
@@ -131,6 +166,7 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-contrib-uglify'
   @loadNpmTasks 'grunt-jsonmin'
+  @loadNpmTasks 'grunt-contrib-imagemin'
   @loadNpmTasks 'grunt-contrib-cssmin'
   @loadNpmTasks 'grunt-contrib-htmlmin'
   @loadNpmTasks 'grunt-contrib-watch'
@@ -138,7 +174,7 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-processhtml'
 
   @registerTask 'dist', ['clean', 'jshint', 'uglify','jsonmin',
-                         'cssmin', 'copy', 'processhtml']
+                         'imagemin', 'cssmin', 'copy', 'processhtml']
   @registerTask 'server',  ['jshint', 'connect', 'watch']
   @registerTask 'update', ['curl-dir']
   @registerTask 'default', ['server']

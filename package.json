@@ -15,6 +15,7 @@
     "grunt-contrib-jshint": "*",
     "grunt-contrib-uglify": "*",
     "grunt-jsonmin": "*",
+    "grunt-contrib-imagemin": "*",
     "grunt-contrib-cssmin": "*",
     "grunt-contrib-htmlmin": "*",
     "grunt-contrib-watch": "*",
