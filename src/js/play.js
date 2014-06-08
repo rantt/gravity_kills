@@ -41,7 +41,6 @@ Game.Play.prototype = {
     // this.game.physics.startSystem(Phaser.Physics.NINJA);
 
     this.level = 'level1';
-    // this.level = 'level8';
     this.cellCount = 0;
     this.cellTotal = 0;
 
@@ -116,7 +115,7 @@ Game.Play.prototype = {
     // this.restartText.font = 'Helvetica';
     // this.restartText.anchor.set(0.5);
     this.restartText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia','',21);
-    this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2;
+    this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2 - 175;
 
     this.restartText.fixedToCamera = true;
     this.restartText.visible = false;
@@ -169,13 +168,13 @@ Game.Play.prototype = {
 
     if (this.level === 'the_end') {
       won = true;
-      msg =  'Your Died: ' + deaths + '\n';
+      msg =  'You Died: ' + deaths + '\n';
       msg +=  'Press R to restart.\n';
       msg += '~Share your score on twitter!~\n';
       this.restartText.setText(msg);
-      this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2;
       this.restartText.visible = true;
-      this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+110,'twitter', this.twitter, this);
+
+      this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+130,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
       this.twitterButton.fixedToCamera = true;
     }else if (this.level === 'the_impossible') {
@@ -184,13 +183,13 @@ Game.Play.prototype = {
       this.twitterButton.visible = false;
     }else if (this.level === undefined) {
       won = true;
-      msg = 'Congratulations! You Beat the Impossible Level.\n';
+      msg = 'Congratulations! \nYou Beat the Impossible Level.\n';
       msg +=  'Press R to restart.\n';
       msg +=  'You Died: ' + deaths + '\n';
       this.restartText.setText(msg);
-      this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2;
       this.restartText.visible = true;
-      this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+110,'twitter', this.twitter, this);
+
+      this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+150,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
       this.twitterButton.fixedToCamera = true;
     }
