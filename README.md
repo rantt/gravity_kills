@@ -15,7 +15,8 @@ Developed using [Phaser.js](http://phaser.io)
 
 **Music**
 
-
 Caustic Chip by Jan125 from http://opengameart.org/content/caustic-chip
 
+** Font **
 
+Minecraftia by Andrew Tyler from http://andrewtyler.net/fonts/
