@@ -37,10 +37,9 @@ Game.Play.prototype = {
   create: function() {
 
     this.game.physics.startSystem(Phaser.ARCADE);
-    // this.game.physics.startSystem(Phaser.Physics.P2JS);
-    // this.game.physics.startSystem(Phaser.Physics.NINJA);
 
-    this.level = 'level1';
+    // this.level = 'level1';
+    this.level = 'the_end';
     this.cellCount = 0;
     this.cellTotal = 0;
 
@@ -110,10 +109,6 @@ Game.Play.prototype = {
     muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
 
 
-    // var loadingText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia', 'Loading...', 32);
-    // this.restartText = this.game.add.text(Game.w/2, Game.h/2, '', { font: '32px Helvetica', fill: '#ffffff', align: 'center'});
-    // this.restartText.font = 'Helvetica';
-    // this.restartText.anchor.set(0.5);
     this.restartText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia','',21);
     this.restartText.x = this.game.width / 2 - this.restartText.textWidth / 2 - 175;
 
@@ -168,7 +163,7 @@ Game.Play.prototype = {
 
     if (this.level === 'the_end') {
       won = true;
-      msg =  'You Died: ' + deaths + '\n';
+      msg =  'You Died: ' + deaths.toString() + '\n';
       msg +=  'Press R to restart.\n';
       msg += '~Share your score on twitter!~\n';
       this.restartText.setText(msg);
@@ -177,22 +172,23 @@ Game.Play.prototype = {
       this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+130,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
       this.twitterButton.fixedToCamera = true;
-    }else if (this.level === 'the_impossible') {
-      won = false;
-      this.restartText.visible = false;
-      this.twitterButton.visible = false;
     }else if (this.level === undefined) {
       won = true;
-      msg = 'Congratulations! \nYou Beat the Impossible Level.\n';
+      msg = 'Congratulations! \nYou Beat the Impossible Levels.\n';
       msg +=  'Press R to restart.\n';
-      msg +=  'You Died: ' + deaths + '\n';
+      msg +=  'You Died: ' + deaths.toString() + '\n';
       this.restartText.setText(msg);
       this.restartText.visible = true;
 
       this.twitterButton = this.game.add.button(Game.w/2, Game.h/2+150,'twitter', this.twitter, this);
       this.twitterButton.anchor.setTo(0.5,0.5);
       this.twitterButton.fixedToCamera = true;
+    }else {
+      won = false;
+      this.restartText.visible = false;
+      this.twitterButton.visible = false;
     }
+
 
 
     this.map = this.game.add.tilemap(this.level);

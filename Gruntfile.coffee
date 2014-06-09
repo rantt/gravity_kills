@@ -84,7 +84,9 @@ module.exports = (grunt) ->
           '<%= DST_DIR %>/levels/level3.json':  '<%= SRC_DIR %>/levels/level3.json'
           '<%= DST_DIR %>/levels/level4.json':  '<%= SRC_DIR %>/levels/level4.json'
           '<%= DST_DIR %>/levels/level5.json':  '<%= SRC_DIR %>/levels/level5.json'
+          '<%= DST_DIR %>/levels/level6.json':  '<%= SRC_DIR %>/levels/level6.json'
           '<%= DST_DIR %>/levels/level7.json':  '<%= SRC_DIR %>/levels/level7.json'
+          '<%= DST_DIR %>/levels/level8.json':  '<%= SRC_DIR %>/levels/level8.json'
           '<%= DST_DIR %>/levels/the_end.json': '<%= SRC_DIR %>/levels/the_end.json'
           '<%= DST_DIR %>/levels/the_impossible.json': '<%= SRC_DIR %>/levels/the_impossible.json'
 

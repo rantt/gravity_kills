@@ -21,7 +21,7 @@
                  "name":"",
                  "properties":
                     {
-                     "destination":"the_impossible"
+                     "destination":"level6"
                     },
                  "type":"",
                  "visible":true,
@@ -549,7 +549,7 @@
  "tilesets":[
         {
          "firstgid":1,
-         "image":"..\/assets\/sprites.png",
+         "image":"..\/assets\/image\/sprites.png",
          "imageheight":40,
          "imagewidth":40,
          "margin":0,
@@ -564,7 +564,7 @@
         }, 
         {
          "firstgid":5,
-         "image":"..\/assets\/mobs.png",
+         "image":"..\/assets\/image\/mobs.png",
          "imageheight":42,
          "imagewidth":21,
          "margin":0,
@@ -579,7 +579,7 @@
         }, 
         {
          "firstgid":7,
-         "image":"..\/assets\/cell.png",
+         "image":"..\/assets\/image\/cell.png",
          "imageheight":30,
          "imagewidth":30,
          "margin":0,

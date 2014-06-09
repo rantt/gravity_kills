@@ -30,10 +30,8 @@ Game.Load.prototype = {
 		this.game.load.image('title', 'assets/image/title.png');
 		this.game.load.image('instructions', 'assets/image/instructions.png');
 
-    // var loadingText = this.game.add.text(Game.w/2, Game.h/2, 'Loading...', { font: '30px Helvetica', fill: '#000' });
-    var loadingText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia', 'Loading...', 32);
+    var loadingText = this.game.add.bitmapText(Game.w/2, Game.h/2, 'minecraftia', 'Loading...', 21);
     loadingText.x = this.game.width / 2 - loadingText.textWidth / 2;
-  	// loadingText.anchor.setTo(0.5, 0.5);
 
   	var preloading = this.game.add.sprite(Game.w/2-64, Game.h/2+50, 'loading');
   	this.game.load.setPreloadSprite(preloading);
@@ -49,9 +47,9 @@ Game.Load.prototype = {
     this.game.load.tilemap('level3','levels/level3.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('level4','levels/level4.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('level5','levels/level5.json', null, Phaser.Tilemap.TILED_JSON);
-    // this.game.load.tilemap('level6','levels/level6.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('level6','levels/level6.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('level7','levels/level7.json', null, Phaser.Tilemap.TILED_JSON);
-    // this.game.load.tilemap('level8','levels/level8.json', null, Phaser.Tilemap.TILED_JSON);
+    this.game.load.tilemap('level8','levels/level8.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('the_end','levels/the_end.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.tilemap('the_impossible','levels/the_impossible.json', null, Phaser.Tilemap.TILED_JSON);
     this.game.load.image('tiles', 'assets/image/sprites.png');
